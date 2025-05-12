@@ -1,0 +1,25 @@
+# Byte-compiled & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambiente virtual
+.venv/
+
+# Banco local SQLite
+db.sqlite3
+
+# Configurações de ambiente / variáveis de ambiente
+.env
+.env.* 
+
+# Logs e debug
+*.log
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
