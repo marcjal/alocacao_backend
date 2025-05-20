@@ -25,6 +25,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from core.api.views.export_alocacoes import ExportAlocacoesView
+from core.api.views.dashboard import DashboardSummaryView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -50,6 +51,7 @@ urlpatterns = [
          name='schema-redoc'),
     path('api/v1/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/dashboard/summary/', DashboardSummaryView.as_view(), name='dashboard-summary'),
     path(
         'api/v1/alocacoes/export/csv/',
         ExportAlocacoesView.as_view(),
