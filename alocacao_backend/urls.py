@@ -21,9 +21,23 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from core.api.views.export_alocacoes import ExportAlocacoesView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path(
+        'api/v1/alocacoes/export/csv/',
+        ExportAlocacoesView.as_view(),
+        {'format': 'csv'},    # aqui passamos via kwargs o formato
+        name='export-csv'
+    ),
+    path(
+        'api/v1/alocacoes/export/xlsx/',
+        ExportAlocacoesView.as_view(),
+        {'format': 'xlsx'},   # idem, via kwargs
+        name='export-xlsx'
+    ),
     path('api/v1/', include('core.api.urls')),
 ]
