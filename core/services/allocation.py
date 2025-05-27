@@ -1,8 +1,11 @@
 import datetime
+
 from django.db import transaction
 from django.db.models import Sum, Value
 from django.db.models.functions import Coalesce
-from core.models import Disciplina, Professor, Alocacao
+
+from core.models import Alocacao, Disciplina, Professor
+
 
 def run_allocation(recalculate_all=False):
     """
@@ -19,9 +22,11 @@ def run_allocation(recalculate_all=False):
         disciplinas = Disciplina.objects.filter(alocacoes__isnull=True)
 
     # 2) Carregar professores e suas cargas atuais
-    professores = list(Professor.objects.all().annotate(
-        carga_atual=Coalesce(Sum('alocacoes__horas_alocadas'), Value(0))
-    ))
+    professores = list(
+        Professor.objects.all().annotate(
+            carga_atual=Coalesce(Sum("alocacoes__horas_alocadas"), Value(0))
+        )
+    )
     # Inicializar carga_atual em zero quando None
     for p in professores:
         p.carga_atual = p.carga_atual or 0
@@ -47,7 +52,7 @@ def run_allocation(recalculate_all=False):
                 conflict = prof.indisponibilidades.filter(
                     dia_semana=disc.dia_semana,
                     horario_inicio__lt=disc.horario_fim,
-                    horario_fim__gt=disc.horario_inicio
+                    horario_fim__gt=disc.horario_inicio,
                 ).exists()
                 if conflict:
                     continue
@@ -66,7 +71,7 @@ def run_allocation(recalculate_all=False):
                     disciplina=disc,
                     professor=selecionado,
                     horas_alocadas=duração,
-                    status_conflito=False
+                    status_conflito=False,
                 )
                 # atualizar carga em memória
                 selecionado.carga_atual += duração
@@ -75,7 +80,7 @@ def run_allocation(recalculate_all=False):
                     disciplina=disc,
                     professor=None,
                     horas_alocadas=duração,
-                    status_conflito=True
+                    status_conflito=True,
                 )
             alocacoes_criadas.append(al)
 

@@ -6,13 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0001_initial'),
+        ("core", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='disciplina',
-            name='dia_semana',
-            field=models.CharField(choices=[('segunda', 'Segunda-feira'), ('terca', 'Terça-feira'), ('quarta', 'Quarta-feira'), ('quinta', 'Quinta-feira'), ('sexta', 'Sexta-feira'), ('sabado', 'Sábado')], default='segunda', help_text='Dia da semana de realização da aula', max_length=10),
+            model_name="disciplina",
+            name="dia_semana",
+            field=models.CharField(
+                choices=[
+                    ("segunda", "Segunda-feira"),
+                    ("terca", "Terça-feira"),
+                    ("quarta", "Quarta-feira"),
+                    ("quinta", "Quinta-feira"),
+                    ("sexta", "Sexta-feira"),
+                    ("sabado", "Sábado"),
+                ],
+                default="segunda",
+                help_text="Dia da semana de realização da aula",
+                max_length=10,
+            ),
         ),
     ]

@@ -1,14 +1,17 @@
 import uuid
-from django.db import models
+
 from django.core.validators import MinValueValidator
+from django.db import models
+
 from .base import TimeStampedModel
-from .professor import Professor
 from .dia_semana import DiaSemana
+from .professor import Professor
+
 
 class Indisponibilidade(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     professor = models.ForeignKey(
-        Professor, related_name='indisponibilidades', on_delete=models.CASCADE
+        Professor, related_name="indisponibilidades", on_delete=models.CASCADE
     )
     dia_semana = models.CharField(max_length=10, choices=DiaSemana.choices)
     horario_inicio = models.TimeField()
@@ -19,8 +22,8 @@ class Indisponibilidade(TimeStampedModel):
         verbose_name_plural = "Indisponibilidades"
         constraints = [
             models.CheckConstraint(
-                check=models.Q(horario_inicio__lt=models.F('horario_fim')),
-                name='horario_inicio_menor_fim'
+                check=models.Q(horario_inicio__lt=models.F("horario_fim")),
+                name="horario_inicio_menor_fim",
             )
         ]
 

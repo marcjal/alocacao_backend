@@ -1,7 +1,9 @@
 from rest_framework import viewsets
-from core.models import Professor
-from core.api.serializers.professor import ProfessorSerializer
 from rest_framework.permissions import AllowAny
+
+from core.api.serializers.professor import ProfessorSerializer
+from core.models import Professor
+
 
 class ProfessorViewSet(viewsets.ModelViewSet):
     queryset = Professor.objects.all()

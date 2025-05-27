@@ -1,9 +1,11 @@
 import pandas as pd
-from rest_framework import viewsets, status
+from rest_framework import status, viewsets
 from rest_framework.response import Response
-from core.models import Importacao
+
 from core.api.serializers.importacao import ImportacaoSerializer
+from core.models import Importacao
 from core.services.importer import processar_importacao
+
 
 class ImportacaoViewSet(viewsets.ModelViewSet):
     queryset = Importacao.objects.all()
@@ -15,4 +17,6 @@ class ImportacaoViewSet(viewsets.ModelViewSet):
         importacao = serializer.save()
         # Processa em background ou synchronously:
         processar_importacao(importacao.id)
-        return Response(self.get_serializer(importacao).data, status=status.HTTP_201_CREATED)
+        return Response(
+            self.get_serializer(importacao).data, status=status.HTTP_201_CREATED
+        )
