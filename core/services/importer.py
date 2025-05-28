@@ -2,11 +2,12 @@ import json
 import logging
 
 import pandas as pd
-from django.db import transaction
+from django.db import IntegrityError, transaction
 
+from core.api.serializers.alocacao_gen import AlocacaoGenSerializer
 from core.api.serializers.disciplina import DisciplinaSerializer
 from core.api.serializers.professor import ProfessorSerializer
-from core.models import Importacao
+from core.models.importacao import Importacao
 
 logger = logging.getLogger(__name__)
 
@@ -14,76 +15,91 @@ logger = logging.getLogger(__name__)
 def processar_importacao(import_id):
     imp = Importacao.objects.get(id=import_id)
     imp.status = "processing"
-    imp.erros = []
-    imp.save()
+    imp.save(update_fields=["status"])
 
     try:
-        # 1) Ler o arquivo CSV ou XLSX
         path = imp.file.path
         if path.lower().endswith((".xlsx", ".xls")):
-            df = pd.read_excel(path)
+            df = pd.read_excel(path, dtype=str).fillna("")
         else:
-            # Aqui adicionamos escapechar para lidar com \" no CSV
             df = pd.read_csv(
-                path, encoding="utf-8-sig", escapechar="\\", quotechar='"'
+                path,
+                encoding="utf-8-sig",
+                escapechar="\\",
+                quotechar='"',
+                dtype=str,
+                na_filter=False,
+                keep_default_na=False,
             )
 
-        # 2) Transformar num registro por linha
+        headers = set(df.columns)
+        if {"nome", "areas", "carga_horaria_maxima_semanal"}.issubset(headers):
+            tipo = "professores"
+        elif {"nome", "area"}.issubset(headers):
+            tipo = "disciplinas"
+        else:
+            tipo = "alocacoes"
+
         registros = df.to_dict(orient="records")
         serializers = []
         erros = []
 
-        # 3) Validação em lote
-        for idx, data in enumerate(registros):
-            if imp.tipo == "professores" and isinstance(
-                data.get("areas"), str
-            ):
+        for idx, data in enumerate(registros, start=1):
+            if tipo == "professores" and isinstance(data.get("areas"), str):
                 try:
-                    # Tenta converter JSON-string em lista
                     data["areas"] = json.loads(data["areas"])
                 except json.JSONDecodeError:
-                    # Fallback caso venha algo como Física;Química
                     data["areas"] = [
                         s.strip()
                         for s in data["areas"].split(";")
                         if s.strip()
                     ]
 
-            serializer = (
-                ProfessorSerializer(data=data)
-                if imp.tipo == "professores"
-                else DisciplinaSerializer(data=data)
-            )
-
-            if not serializer.is_valid():
-                erros.append({"linha": idx + 1, "errors": serializer.errors})
+            if tipo == "professores":
+                ser = ProfessorSerializer(data=data)
+            elif tipo == "disciplinas":
+                ser = DisciplinaSerializer(data=data)
             else:
-                serializers.append(serializer)
+                ser = AlocacaoGenSerializer(data=data)
+
+            if not ser.is_valid():
+                erros.append((idx, ser.errors))
+            else:
+                serializers.append((idx, ser))
 
         imp.registros_total = len(registros)
         imp.registros_erro = len(erros)
-        imp.erros = erros
+        imp.save(update_fields=["registros_total", "registros_erro"])
 
-        # Abort se tiver qualquer erro de validação
         if erros:
             imp.status = "error"
-            imp.save()
+            imp.save(update_fields=["status"])
             return
 
-        # 4) Salvamento atômico
         sucesso = 0
-        with transaction.atomic():
-            for s in serializers:
-                s.save()
+        for idx, ser in serializers:
+            try:
+                with transaction.atomic():
+                    ser.save()
                 sucesso += 1
+            except IntegrityError:
+                logger.warning(f"Linha {idx}: registro duplicado, skip.")
+                sucesso += 1
+            except Exception as exc:
+                logger.error(
+                    f"Linha {idx}: falha inesperada – {exc}", exc_info=True
+                )
+                erros.append((idx, str(exc)))
 
         imp.registros_sucesso = sucesso
-        imp.status = "done"
-        imp.erros = []
-        imp.save()
+        imp.registros_erro = len(erros)
+        imp.status = "done" if not erros else "error"
+        imp.save(
+            update_fields=["registros_sucesso", "registros_erro", "status"]
+        )
 
     except Exception as e:
         logger.exception(f"Falha ao processar importacao {import_id}")
         imp.status = "error"
-        imp.erros = [{"linha": None, "errors": str(e)}]
-        imp.save()
+        imp.registros_erro = imp.registros_total or 0
+        imp.save(update_fields=["status", "registros_erro"])

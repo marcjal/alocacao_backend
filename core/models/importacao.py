@@ -9,6 +9,7 @@ class Importacao(TimeStampedModel):
     TIPOS = [
         ("disciplinas", "Disciplinas"),
         ("professores", "Professores"),
+        ("alocacoes", "Alocações genéricas"),
     ]
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     tipo = models.CharField(max_length=20, choices=TIPOS)

@@ -1,0 +1,11 @@
+Código atividade,Nome da Atividade,Dia da Semana,Horário início,Horário fim,Professor,Horas alocadas,Status conflito
+2ad0bfe9-ee19-4396-a92a-65e747bff2b2,Cálculo I,terca,08:00:00,10:00:00,Ana Santos,2,OK
+8e28b46f-e2f2-41ab-a75b-6f44a5cae5c4,Física Avançada,segunda,08:00:00,10:00:00,Marcelo Alves,2,OK
+8e28b46f-e2f2-41ab-a75b-6f44a5cae5c4,Física Avançada,segunda,08:00:00,10:00:00,Felipe Souza,2,OK
+8e28b46f-e2f2-41ab-a75b-6f44a5cae5c4,Física Avançada,terca,14:00:00,16:00:00,Carlos Mendes,2,OK
+8e28b46f-e2f2-41ab-a75b-6f44a5cae5c4,Física Avançada,segunda,08:00:00,10:00:00,João Silva,2,OK
+8e28b46f-e2f2-41ab-a75b-6f44a5cae5c4,Física Avançada,segunda,08:00:00,10:00:00,Marcelo Alves,2,⚠️
+6495f627-cfd3-40c1-b5c2-3e901cb43554,Física Especial,segunda,08:00:00,10:00:00,Prof Único,2,OK
+6495f627-cfd3-40c1-b5c2-3e901cb43554,Física Especial,segunda,08:00:00,10:00:00,Carlos Oliveira,2,OK
+7e5541c1-584f-411d-ab96-92d792ec7009,Física Geral,quarta,14:00:00,16:00:00,João Silva,2,OK
+454a83ab-4d3c-45af-a0a4-5beec84dac19,Programação Python,quinta,14:00:00,16:00:00,Pedro Almeida,2,OK

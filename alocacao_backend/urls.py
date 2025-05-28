@@ -25,10 +25,6 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from core.api.views.calendar import CalendarDataView
-from core.api.views.dashboard import DashboardSummaryView
-from core.api.views.export_alocacoes import ExportAlocacoesView
-
 schema_view = get_schema_view(
     openapi.Info(
         title="API Alocação",
@@ -53,7 +49,7 @@ urlpatterns = [
         schema_view.with_ui("swagger", cache_timeout=0),
         name="schema-swagger-ui",
     ),
-    # ReDoc UI (opcional)
+    # ReDoc UI
     path(
         "redoc/",
         schema_view.with_ui("redoc", cache_timeout=0),
@@ -68,28 +64,6 @@ urlpatterns = [
         "api/v1/auth/token/refresh/",
         TokenRefreshView.as_view(),
         name="token_refresh",
-    ),
-    path(
-        "api/v1/dashboard/summary/",
-        DashboardSummaryView.as_view(),
-        name="dashboard-summary",
-    ),
-    path(
-        "api/v1/alocacoes/export/csv/",
-        ExportAlocacoesView.as_view(),
-        {"format": "csv"},  # aqui passamos via kwargs o formato
-        name="export-csv",
-    ),
-    path(
-        "api/v1/alocacoes/export/xlsx/",
-        ExportAlocacoesView.as_view(),
-        {"format": "xlsx"},  # idem, via kwargs
-        name="export-xlsx",
-    ),
-    path(
-        "api/v1/calendar/data/",
-        CalendarDataView.as_view(),
-        name="calendar-data",
     ),
     path("api/v1/", include("core.api.urls")),
 ]

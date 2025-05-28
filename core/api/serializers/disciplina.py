@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Disciplina
+from core.models.disciplina import Disciplina
 
 
 class DisciplinaSerializer(serializers.ModelSerializer):
@@ -10,9 +10,8 @@ class DisciplinaSerializer(serializers.ModelSerializer):
             "id",
             "nome",
             "area",
-            "dia_semana",
-            "horario_inicio",
-            "horario_fim",
-            "carga_horaria_semanal",
-            "horas_a_serem_alocadas",
+            "created_at",
+            "updated_at",
         ]
+
+        read_only_fields = ["id", "created_at", "updated_at"]

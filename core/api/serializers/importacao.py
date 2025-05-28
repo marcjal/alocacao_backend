@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Importacao
+from core.models.importacao import Importacao
 
 
 class ImportacaoSerializer(serializers.ModelSerializer):
@@ -18,6 +18,7 @@ class ImportacaoSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
         read_only_fields = [
+            "tipo",
             "status",
             "registros_total",
             "registros_sucesso",
@@ -25,3 +26,6 @@ class ImportacaoSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
+        extra_kwargs = {
+            "tipo": {"read_only": True},
+        }

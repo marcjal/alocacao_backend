@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: alocacao
+      POSTGRES_USER: aloc
+      POSTGRES_PASSWORD: senha
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: alocacao-backend
+    environment:
+      DATABASE_URL: postgres://aloc:senha@db:5432/alocacao
+      DEBUG: "False"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: alocacao-frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - backend
+
+volumes:
+  db_data:
+
+networks:
+  backend:
+    driver: bridge

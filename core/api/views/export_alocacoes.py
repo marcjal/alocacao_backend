@@ -6,44 +6,44 @@ import pandas as pd
 from django.http import HttpResponse, JsonResponse
 from django.views import View
 
-from core.models import Alocacao
+from core.models.alocacao import Alocacao
 
 
 class ExportAlocacoesView(View):
     """
     Endpoint estático para exportar alocações em CSV ou XLSX.
-    Suporta base64 via query param `as_base64`.
-    Formato definido por rota: /export/<format>/
+    Suporta Base64 via query-param `as_base64`.
+    O formato (csv/xlsx) vem pela URL: /export/<format>/
     """
 
     def get(self, request, *args, **kwargs):
-        # Determina formato via path kwarg ('csv' ou 'xlsx')
         fmt = kwargs.get("format", "csv").lower()
-        # Se `as_base64` for '1', 'true' ou 'yes', retorna JSON com Base64
         as_b64 = request.GET.get("as_base64") in ("1", "true", "yes")
 
-        # Consulta alocações e monta linhas
-        qs = Alocacao.objects.select_related("disciplina", "professor").all()
+        qs = Alocacao.objects.select_related(
+            "turma", "turma__disciplina", "professor"
+        ).all()
+
         rows = []
         for al in qs:
+            turma = al.turma
+            disc = turma.disciplina
+
             rows.append(
                 {
-                    "Código atividade": str(al.disciplina.id),
-                    "Nome da Atividade": al.disciplina.nome,
-                    "Dia da Semana": al.disciplina.dia_semana,
-                    "Horário início": al.disciplina.horario_inicio.strftime(
+                    "Código atividade": str(disc.id),
+                    "Nome da Atividade": disc.nome,
+                    "Dia da Semana": turma.dia_semana,
+                    "Horário início": turma.horario_inicio.strftime(
                         "%H:%M:%S"
                     ),
-                    "Horário fim": al.disciplina.horario_fim.strftime(
-                        "%H:%M:%S"
-                    ),
+                    "Horário fim": turma.horario_fim.strftime("%H:%M:%S"),
                     "Professor": al.professor.nome if al.professor else "",
                     "Horas alocadas": al.horas_alocadas,
                     "Status conflito": "⚠️" if al.status_conflito else "OK",
                 }
             )
 
-        # Geração do conteúdo bruto
         if fmt == "xlsx":
             buffer = io.BytesIO()
             pd.DataFrame(rows).to_excel(buffer, index=False)
@@ -62,12 +62,10 @@ class ExportAlocacoesView(View):
             content_type = "text/csv"
             filename = "alocacoes.csv"
 
-        # Se for Base64, retorna JsonResponse
         if as_b64:
             b64 = base64.b64encode(raw).decode("ascii")
             return JsonResponse({"filename": filename, "content": b64})
 
-        # Caso padrão: retorna HttpResponse forçando download
         resp = HttpResponse(raw, content_type=content_type)
         resp["Content-Disposition"] = f'attachment; filename="{filename}"'
         return resp

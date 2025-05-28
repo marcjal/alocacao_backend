@@ -11,7 +11,7 @@ db.sqlite3
 
 # Configurações de ambiente / variáveis de ambiente
 .env
-.env.* 
+.env.*
 
 # Logs e debug
 *.log

@@ -16,6 +16,13 @@ class Professor(TimeStampedModel):
         validators=[MinValueValidator(1)],
         help_text="Limite de horas semanais que o professor pode ministrar",
     )
+    chapa = models.CharField(
+        max_length=50,
+        unique=True,
+        null=True,
+        blank=True,
+        help_text="Matrícula ou chapa do professor (para importação)",
+    )
 
     class Meta:
         verbose_name = "Professor"

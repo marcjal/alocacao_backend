@@ -1,3 +1,5 @@
-nome,area,dia_semana,horario_inicio,horario_fim,carga_horaria_semanal,horas_a_serem_alocadas
-Cálculo I,Matemática,terca,08:00,10:00,2,2
-Física Geral,Física,quarta,14:00,16:00,2,2
+nome,area
+Programação Java,Computação
+Programação Go,Computação
+Programação JS,Computação
+Programação Rust,Computação
