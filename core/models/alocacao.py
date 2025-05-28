@@ -16,7 +16,9 @@ class Alocacao(TimeStampedModel):
     professor = models.ForeignKey(
         Professor, on_delete=models.CASCADE, related_name="alocacoes"
     )
-    horas_alocadas = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    horas_alocadas = models.PositiveIntegerField(
+        validators=[MinValueValidator(1)]
+    )
     status_conflito = models.BooleanField(default=False)
 
     class Meta:

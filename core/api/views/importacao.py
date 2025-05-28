@@ -18,5 +18,6 @@ class ImportacaoViewSet(viewsets.ModelViewSet):
         # Processa em background ou synchronously:
         processar_importacao(importacao.id)
         return Response(
-            self.get_serializer(importacao).data, status=status.HTTP_201_CREATED
+            self.get_serializer(importacao).data,
+            status=status.HTTP_201_CREATED,
         )

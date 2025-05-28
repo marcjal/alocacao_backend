@@ -19,7 +19,9 @@ class CalendarDataView(APIView):
         resources = [{"id": str(p.id), "title": p.nome} for p in profs]
 
         # 2) Montar eventos (alocações)
-        alocs = Alocacao.objects.select_related("disciplina", "professor").all()
+        alocs = Alocacao.objects.select_related(
+            "disciplina", "professor"
+        ).all()
         events = []
         for a in alocs:
             disc = a.disciplina
@@ -28,10 +30,13 @@ class CalendarDataView(APIView):
                     "id": str(a.id),
                     "disciplina": DisciplinaSerializer(disc).data,
                     "professor": (
-                        ProfessorSerializer(a.professor).data if a.professor else None
+                        ProfessorSerializer(a.professor).data
+                        if a.professor
+                        else None
                     ),
                     "turma": {
-                        # Se seu modelo de Disciplina tiver um campo 'codigo_turma':
+                        # Se seu modelo de Disciplina tiver um campo
+                        # 'codigo_turma':
                         "nome": getattr(disc, "codigo_turma", str(disc.id)),
                         # Esses dois campos você já tem no model:
                         "dataHoraInicio": disc.dia_semana

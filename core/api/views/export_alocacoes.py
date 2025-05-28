@@ -31,8 +31,12 @@ class ExportAlocacoesView(View):
                     "Código atividade": str(al.disciplina.id),
                     "Nome da Atividade": al.disciplina.nome,
                     "Dia da Semana": al.disciplina.dia_semana,
-                    "Horário início": al.disciplina.horario_inicio.strftime("%H:%M:%S"),
-                    "Horário fim": al.disciplina.horario_fim.strftime("%H:%M:%S"),
+                    "Horário início": al.disciplina.horario_inicio.strftime(
+                        "%H:%M:%S"
+                    ),
+                    "Horário fim": al.disciplina.horario_fim.strftime(
+                        "%H:%M:%S"
+                    ),
                     "Professor": al.professor.nome if al.professor else "",
                     "Horas alocadas": al.horas_alocadas,
                     "Status conflito": "⚠️" if al.status_conflito else "OK",
@@ -45,13 +49,13 @@ class ExportAlocacoesView(View):
             pd.DataFrame(rows).to_excel(buffer, index=False)
             buffer.seek(0)
             raw = buffer.getvalue()
-            content_type = (
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            )
+            content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             filename = "alocacoes.xlsx"
         else:
             buffer = io.StringIO()
-            writer = csv.DictWriter(buffer, fieldnames=rows[0].keys() if rows else [])
+            writer = csv.DictWriter(
+                buffer, fieldnames=rows[0].keys() if rows else []
+            )
             writer.writeheader()
             writer.writerows(rows)
             raw = buffer.getvalue().encode("utf-8")

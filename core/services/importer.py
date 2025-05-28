@@ -24,7 +24,9 @@ def processar_importacao(import_id):
             df = pd.read_excel(path)
         else:
             # Aqui adicionamos escapechar para lidar com \" no CSV
-            df = pd.read_csv(path, encoding="utf-8-sig", escapechar="\\", quotechar='"')
+            df = pd.read_csv(
+                path, encoding="utf-8-sig", escapechar="\\", quotechar='"'
+            )
 
         # 2) Transformar num registro por linha
         registros = df.to_dict(orient="records")
@@ -33,14 +35,18 @@ def processar_importacao(import_id):
 
         # 3) Validação em lote
         for idx, data in enumerate(registros):
-            if imp.tipo == "professores" and isinstance(data.get("areas"), str):
+            if imp.tipo == "professores" and isinstance(
+                data.get("areas"), str
+            ):
                 try:
                     # Tenta converter JSON-string em lista
                     data["areas"] = json.loads(data["areas"])
                 except json.JSONDecodeError:
                     # Fallback caso venha algo como Física;Química
                     data["areas"] = [
-                        s.strip() for s in data["areas"].split(";") if s.strip()
+                        s.strip()
+                        for s in data["areas"].split(";")
+                        if s.strip()
                     ]
 
             serializer = (

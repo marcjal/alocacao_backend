@@ -9,7 +9,9 @@ from .base import TimeStampedModel
 class Professor(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nome = models.CharField(max_length=255, unique=True)
-    areas = models.JSONField(help_text="Lista de áreas/palavras-chave do professor")
+    areas = models.JSONField(
+        help_text="Lista de áreas/palavras-chave do professor"
+    )
     carga_horaria_maxima_semanal = models.PositiveIntegerField(
         validators=[MinValueValidator(1)],
         help_text="Limite de horas semanais que o professor pode ministrar",

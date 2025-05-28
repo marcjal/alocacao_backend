@@ -20,8 +20,10 @@ from django.urls import include, path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-from rest_framework_simplejwt.views import (TokenObtainPairView,
-                                            TokenRefreshView)
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 from core.api.views.calendar import CalendarDataView
 from core.api.views.dashboard import DashboardSummaryView
@@ -52,10 +54,20 @@ urlpatterns = [
         name="schema-swagger-ui",
     ),
     # ReDoc UI (opcional)
-    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
-    path("api/v1/auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path(
-        "api/v1/auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
+        "redoc/",
+        schema_view.with_ui("redoc", cache_timeout=0),
+        name="schema-redoc",
+    ),
+    path(
+        "api/v1/auth/token/",
+        TokenObtainPairView.as_view(),
+        name="token_obtain_pair",
+    ),
+    path(
+        "api/v1/auth/token/refresh/",
+        TokenRefreshView.as_view(),
+        name="token_refresh",
     ),
     path(
         "api/v1/dashboard/summary/",
@@ -74,6 +86,10 @@ urlpatterns = [
         {"format": "xlsx"},  # idem, via kwargs
         name="export-xlsx",
     ),
-    path("api/v1/calendar/data/", CalendarDataView.as_view(), name="calendar-data"),
+    path(
+        "api/v1/calendar/data/",
+        CalendarDataView.as_view(),
+        name="calendar-data",
+    ),
     path("api/v1/", include("core.api.urls")),
 ]
