@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: alocacao
+      POSTGRES_USER: aloc
+      POSTGRES_PASSWORD: senha
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: alocacao-backend
+    command: gunicorn alocacao_backend.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    environment:
+      DATABASE_URL: postgres://aloc:senha@db:5432/alocacao
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: alocacao-frontend
+    ports:
+      - "80:80"
+    networks:
+      - backend
+
+volumes:
+  db_data:
+
+networks:
+  backend:
+    driver: bridge

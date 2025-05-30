@@ -55,7 +55,11 @@ alocacao_backend/         # Projeto Django
 3. Instale dependências:
 
    ```bash
-   pip install -r requirements.txt
+   pip install pip-tools
+   pip-compile requirements.in
+   pip-compile requirements-dev.in
+   pip install -r requirements.txt        # runtime
+   pip install -r requirements-dev.txt    # dev/tools
    ```
 
 4. Configure o `.env` (variáveis de banco, secret key, etc.)

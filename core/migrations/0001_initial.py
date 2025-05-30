@@ -49,17 +49,13 @@ class Migration(migrations.Migration):
                 (
                     "carga_horaria_semanal",
                     models.PositiveIntegerField(
-                        validators=[
-                            django.core.validators.MinValueValidator(1)
-                        ]
+                        validators=[django.core.validators.MinValueValidator(1)]
                     ),
                 ),
                 (
                     "horas_a_serem_alocadas",
                     models.PositiveIntegerField(
-                        validators=[
-                            django.core.validators.MinValueValidator(1)
-                        ]
+                        validators=[django.core.validators.MinValueValidator(1)]
                     ),
                 ),
             ],
@@ -94,9 +90,7 @@ class Migration(migrations.Migration):
                     "carga_horaria_maxima_semanal",
                     models.PositiveIntegerField(
                         help_text="Limite de horas semanais que o professor pode ministrar",
-                        validators=[
-                            django.core.validators.MinValueValidator(1)
-                        ],
+                        validators=[django.core.validators.MinValueValidator(1)],
                     ),
                 ),
             ],
@@ -175,9 +169,7 @@ class Migration(migrations.Migration):
                 (
                     "horas_alocadas",
                     models.PositiveIntegerField(
-                        validators=[
-                            django.core.validators.MinValueValidator(1)
-                        ]
+                        validators=[django.core.validators.MinValueValidator(1)]
                     ),
                 ),
                 ("status_conflito", models.BooleanField(default=False)),
