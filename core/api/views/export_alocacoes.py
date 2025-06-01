@@ -6,7 +6,7 @@ import pandas as pd
 from django.http import HttpResponse, JsonResponse
 from django.views import View
 
-from core.models import Alocacao
+from core.models.alocacao import Alocacao
 
 
 class ExportAlocacoesView(View):

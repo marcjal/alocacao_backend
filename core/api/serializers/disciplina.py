@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Disciplina
+from core.models.disciplina import Disciplina
 
 
 class DisciplinaSerializer(serializers.ModelSerializer):

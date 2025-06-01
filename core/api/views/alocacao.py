@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from core.api.serializers.alocacao import AlocacaoSerializer
-from core.models import Alocacao
+from core.models.alocacao import Alocacao
 from core.services.allocation import run_allocation
 
 

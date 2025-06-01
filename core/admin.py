@@ -1,6 +1,9 @@
 from django.contrib import admin
 
-from .models import Alocacao, Disciplina, Disponibilidade, Professor
+from core.models.alocacao import Alocacao
+from core.models.disciplina import Disciplina
+from core.models.disponibilidade import Disponibilidade
+from core.models.professor import Professor
 
 
 @admin.register(Professor)

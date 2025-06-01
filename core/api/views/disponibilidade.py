@@ -2,7 +2,7 @@ from rest_framework import viewsets
 
 from core.api.permissions import IsAdminOrReadOnly
 from core.api.serializers.disponibilidade import DisponibilidadeSerializer
-from core.models import Disponibilidade
+from core.models.disponibilidade import Disponibilidade
 
 
 class DisponibilidadeViewSet(viewsets.ModelViewSet):

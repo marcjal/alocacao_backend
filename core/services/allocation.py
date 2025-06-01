@@ -4,7 +4,9 @@ from django.db import transaction
 from django.db.models import Sum, Value
 from django.db.models.functions import Coalesce
 
-from core.models import Alocacao, Disciplina, Professor
+from core.models.alocacao import Alocacao
+from core.models.disciplina import Disciplina
+from core.models.professor import Professor
 
 
 def run_allocation(recalculate_all=False):

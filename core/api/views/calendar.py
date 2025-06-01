@@ -5,7 +5,8 @@ from rest_framework.views import APIView
 
 from core.api.serializers.disciplina import DisciplinaSerializer
 from core.api.serializers.professor import ProfessorSerializer
-from core.models import Alocacao, Professor
+from core.models.alocacao import Alocacao
+from core.models.professor import Professor
 
 
 class CalendarDataView(APIView):

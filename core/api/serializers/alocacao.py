@@ -2,7 +2,9 @@ from rest_framework import serializers
 
 from core.api.serializers.disciplina import DisciplinaSerializer
 from core.api.serializers.professor import ProfessorSerializer
-from core.models import Alocacao, Disciplina, Professor
+from core.models.alocacao import Alocacao
+from core.models.disciplina import Disciplina
+from core.models.professor import Professor
 
 
 class AlocacaoSerializer(serializers.ModelSerializer):

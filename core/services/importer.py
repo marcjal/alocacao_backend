@@ -6,7 +6,7 @@ from django.db import transaction
 
 from core.api.serializers.disciplina import DisciplinaSerializer
 from core.api.serializers.professor import ProfessorSerializer
-from core.models import Importacao
+from core.models.importacao import Importacao
 
 logger = logging.getLogger(__name__)
 

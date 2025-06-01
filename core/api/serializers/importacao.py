@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Importacao
+from core.models.importacao import Importacao
 
 
 class ImportacaoSerializer(serializers.ModelSerializer):

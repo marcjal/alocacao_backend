@@ -4,7 +4,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from core.models import Alocacao, Disciplina, Professor
+from core.models.alocacao import Alocacao
+from core.models.disciplina import Disciplina
+from core.models.professor import Professor
 
 
 class DashboardSummaryView(APIView):

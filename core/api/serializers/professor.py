@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from core.api.serializers.disponibilidade import DisponibilidadeSerializer
-from core.models import Professor
+from core.models.professor import Professor
 
 
 class ProfessorSerializer(serializers.ModelSerializer):

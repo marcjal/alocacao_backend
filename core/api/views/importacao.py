@@ -2,7 +2,7 @@ from rest_framework import status, viewsets
 from rest_framework.response import Response
 
 from core.api.serializers.importacao import ImportacaoSerializer
-from core.models import Importacao
+from core.models.importacao import Importacao
 from core.services.importer import processar_importacao
 
 
