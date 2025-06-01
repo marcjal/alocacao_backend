@@ -53,7 +53,7 @@ urlpatterns = [
         schema_view.with_ui("swagger", cache_timeout=0),
         name="schema-swagger-ui",
     ),
-    # ReDoc UI (opcional)
+    # ReDoc UI
     path(
         "redoc/",
         schema_view.with_ui("redoc", cache_timeout=0),
@@ -77,13 +77,13 @@ urlpatterns = [
     path(
         "api/v1/alocacoes/export/csv/",
         ExportAlocacoesView.as_view(),
-        {"format": "csv"},  # aqui passamos via kwargs o formato
+        {"format": "csv"},
         name="export-csv",
     ),
     path(
         "api/v1/alocacoes/export/xlsx/",
         ExportAlocacoesView.as_view(),
-        {"format": "xlsx"},  # idem, via kwargs
+        {"format": "xlsx"},
         name="export-xlsx",
     ),
     path(

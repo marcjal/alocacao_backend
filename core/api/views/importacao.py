@@ -14,7 +14,6 @@ class ImportacaoViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         importacao = serializer.save()
-        # Processa em background ou synchronously:
         processar_importacao(importacao.id)
         return Response(
             self.get_serializer(importacao).data,
