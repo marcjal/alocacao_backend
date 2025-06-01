@@ -38,8 +38,12 @@ def run_allocation(recalculate_all=False):
         for disc in disciplinas:
             # calcular duração em horas
             duração = (
-                datetime.datetime.combine(datetime.date.today(), disc.horario_fim)
-                - datetime.datetime.combine(datetime.date.today(), disc.horario_inicio)
+                datetime.datetime.combine(
+                    datetime.date.today(), disc.horario_fim
+                )
+                - datetime.datetime.combine(
+                    datetime.date.today(), disc.horario_inicio
+                )
             ).seconds / 3600
 
             # filtrar candidatos
@@ -49,7 +53,7 @@ def run_allocation(recalculate_all=False):
                 if disc.area not in prof.areas:
                     continue
                 # sem conflito de horário?
-                conflict = prof.indisponibilidades.filter(
+                conflict = prof.disponibilidade.filter(
                     dia_semana=disc.dia_semana,
                     horario_inicio__lt=disc.horario_fim,
                     horario_fim__gt=disc.horario_inicio,
@@ -57,7 +61,10 @@ def run_allocation(recalculate_all=False):
                 if conflict:
                     continue
                 # carga restante suficiente?
-                if prof.carga_atual + duração > prof.carga_horaria_maxima_semanal:
+                if (
+                    prof.carga_atual + duração
+                    > prof.carga_horaria_maxima_semanal
+                ):
                     continue
                 candidatos.append(prof)
 

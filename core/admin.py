@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Alocacao, Disciplina, Indisponibilidade, Professor
+from .models import Alocacao, Disciplina, Disponibilidade, Professor
 
 
 @admin.register(Professor)
@@ -10,8 +10,8 @@ class ProfessorAdmin(admin.ModelAdmin):
     list_filter = ("areas",)
 
 
-@admin.register(Indisponibilidade)
-class IndisponibilidadeAdmin(admin.ModelAdmin):
+@admin.register(Disponibilidade)
+class DisponibilidadeAdmin(admin.ModelAdmin):
     list_display = ("professor", "dia_semana", "horario_inicio", "horario_fim")
     list_filter = ("dia_semana",)
 

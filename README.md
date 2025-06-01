@@ -112,9 +112,9 @@ GET  /professores/{id}/  # detalhes
 PUT/PATCH/DELETE idem
 ```
 
-### Disciplinas e Indisponibilidades
+### Disciplinas e Disponibilidades
 
-Mesmas operações em `/disciplinas/` e `/indisponibilidades/`.
+Mesmas operações em `/disciplinas/` e `/disponibilidades/`.
 
 ### Importação em Lote
 

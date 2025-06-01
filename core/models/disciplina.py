@@ -32,4 +32,8 @@ class Disciplina(TimeStampedModel):
         ordering = ["dia_semana", "horario_inicio"]
 
     def __str__(self):
-        return f"{self.nome} ({self.get_dia_semana_display()} {self.horario_inicio}-{self.horario_fim})"
+        return f"{
+            self.nome} ({
+            self.get_dia_semana_display()} {
+            self.horario_inicio}-{
+                self.horario_fim})"

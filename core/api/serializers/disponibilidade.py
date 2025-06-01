@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from core.models import Indisponibilidade
+from core.models import Disponibilidade
 
 
-class IndisponibilidadeSerializer(serializers.ModelSerializer):
+class DisponibilidadeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Indisponibilidade
+        model = Disponibilidade
         fields = [
             "id",
             "professor",

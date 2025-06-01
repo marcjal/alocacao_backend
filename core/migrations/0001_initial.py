@@ -49,13 +49,17 @@ class Migration(migrations.Migration):
                 (
                     "carga_horaria_semanal",
                     models.PositiveIntegerField(
-                        validators=[django.core.validators.MinValueValidator(1)]
+                        validators=[
+                            django.core.validators.MinValueValidator(1)
+                        ]
                     ),
                 ),
                 (
                     "horas_a_serem_alocadas",
                     models.PositiveIntegerField(
-                        validators=[django.core.validators.MinValueValidator(1)]
+                        validators=[
+                            django.core.validators.MinValueValidator(1)
+                        ]
                     ),
                 ),
             ],
@@ -90,7 +94,9 @@ class Migration(migrations.Migration):
                     "carga_horaria_maxima_semanal",
                     models.PositiveIntegerField(
                         help_text="Limite de horas semanais que o professor pode ministrar",
-                        validators=[django.core.validators.MinValueValidator(1)],
+                        validators=[
+                            django.core.validators.MinValueValidator(1)
+                        ],
                     ),
                 ),
             ],
@@ -101,7 +107,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name="Indisponibilidade",
+            name="Disponibilidade",
             fields=[
                 ("created_at", models.DateTimeField(auto_now_add=True)),
                 ("updated_at", models.DateTimeField(auto_now=True)),
@@ -134,14 +140,14 @@ class Migration(migrations.Migration):
                     "professor",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name="indisponibilidades",
+                        related_name="disponibilidades",
                         to="core.professor",
                     ),
                 ),
             ],
             options={
-                "verbose_name": "Indisponibilidade",
-                "verbose_name_plural": "Indisponibilidades",
+                "verbose_name": "Disponibilidade",
+                "verbose_name_plural": "Disponibilidades",
                 "constraints": [
                     models.CheckConstraint(
                         condition=models.Q(
@@ -169,7 +175,9 @@ class Migration(migrations.Migration):
                 (
                     "horas_alocadas",
                     models.PositiveIntegerField(
-                        validators=[django.core.validators.MinValueValidator(1)]
+                        validators=[
+                            django.core.validators.MinValueValidator(1)
+                        ]
                     ),
                 ),
                 ("status_conflito", models.BooleanField(default=False)),

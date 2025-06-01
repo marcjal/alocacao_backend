@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from core.api.serializers.indisponibilidade import IndisponibilidadeSerializer
+from core.api.serializers.disponibilidade import DisponibilidadeSerializer
 from core.models import Professor
 
 
 class ProfessorSerializer(serializers.ModelSerializer):
-    indisponibilidades = IndisponibilidadeSerializer(many=True, read_only=True)
+    disponibilidades = DisponibilidadeSerializer(many=True, read_only=True)
 
     class Meta:
         model = Professor
@@ -14,5 +14,5 @@ class ProfessorSerializer(serializers.ModelSerializer):
             "nome",
             "areas",
             "carga_horaria_maxima_semanal",
-            "indisponibilidades",
+            "disponibilidades",
         ]
