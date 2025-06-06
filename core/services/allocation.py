@@ -1,25 +1,28 @@
-import datetime
-
 from django.db import transaction
 from django.db.models import Sum, Value
 from django.db.models.functions import Coalesce
 
 from core.models.alocacao import Alocacao
-from core.models.disciplina import Disciplina
 from core.models.professor import Professor
+from core.models.turma import Turma
 
 
 def run_allocation(recalculate_all=False):
     """
-    Executa a alocação automática de professores em disciplinas.
-    Se recalculate_all for False, aloca apenas disciplinas sem alocação.
+    Executa a alocação automática de professores em Turmas.
+    Cada Turma define:
+      - dia_semana       (texto, ex.: "segunda", "terca", etc.)
+      - horario_inicio   (TimeField)
+      - horario_fim      (TimeField)
+
+    Se recalculate_all for False, aloca apenas Turmas que ainda não tenham Alocacao.
     Retorna lista de instâncias de Alocacao criadas.
     """
+
     if recalculate_all:
-        disciplinas = Disciplina.objects.all()
         Alocacao.objects.all().delete()
-    else:
-        disciplinas = Disciplina.objects.filter(alocacoes__isnull=True)
+
+    turmas = Turma.objects.filter(alocacoes__isnull=True)
 
     professores = list(
         Professor.objects.all().annotate(
@@ -32,52 +35,72 @@ def run_allocation(recalculate_all=False):
     alocacoes_criadas = []
 
     with transaction.atomic():
-        for disc in disciplinas:
-            duração = (
-                datetime.datetime.combine(
-                    datetime.date.today(), disc.horario_fim
-                )
-                - datetime.datetime.combine(
-                    datetime.date.today(), disc.horario_inicio
-                )
-            ).seconds / 3600
+        for turma in turmas:
+            from datetime import date, datetime
 
-            candidatos = []
-            for prof in professores:
-                if disc.area not in prof.areas:
-                    continue
-                conflict = prof.disponibilidade.filter(
-                    dia_semana=disc.dia_semana,
-                    horario_inicio__lt=disc.horario_fim,
-                    horario_fim__gt=disc.horario_inicio,
-                ).exists()
-                if conflict:
-                    continue
+            hi = datetime.combine(date.min, turma.horario_inicio)
+            hf = datetime.combine(date.min, turma.horario_fim)
+            diff_horas = (hf - hi).total_seconds() / 3600
+            if diff_horas <= 0:
+                carga_turma = 1
+            else:
+                carga_turma = int(diff_horas)
+
+            candidatos = [
+                prof
+                for prof in professores
+                if turma.disciplina.area in prof.areas
+            ]
+            candidatos.sort(key=lambda prof: prof.carga_atual)
+
+            escolhido = None
+
+            for prof in candidatos:
                 if (
-                    prof.carga_atual + duração
+                    prof.carga_atual + carga_turma
                     > prof.carga_horaria_maxima_semanal
                 ):
                     continue
-                candidatos.append(prof)
 
-            candidatos.sort(key=lambda p: p.carga_atual)
+                conflito = Alocacao.objects.filter(
+                    professor=prof,
+                    turma__dia_semana=turma.dia_semana,
+                    turma__horario_inicio__lt=turma.horario_fim,
+                    turma__horario_fim__gt=turma.horario_inicio,
+                ).exists()
 
-            if candidatos:
-                selecionado = candidatos[0]
+                if conflito:
+                    continue
+
+                escolhido = prof
+                break
+
+            if escolhido:
                 al = Alocacao.objects.create(
-                    disciplina=disc,
-                    professor=selecionado,
-                    horas_alocadas=duração,
+                    turma=turma,
+                    professor=escolhido,
+                    horas_alocadas=carga_turma,
                     status_conflito=False,
                 )
-                selecionado.carga_atual += duração
+                escolhido.carga_atual += carga_turma
             else:
-                al = Alocacao.objects.create(
-                    disciplina=disc,
-                    professor=None,
-                    horas_alocadas=duração,
-                    status_conflito=True,
-                )
+                if candidatos:
+                    prof = candidatos[0]
+                    al = Alocacao.objects.create(
+                        turma=turma,
+                        professor=prof,
+                        horas_alocadas=carga_turma,
+                        status_conflito=True,
+                    )
+                    prof.carga_atual += carga_turma
+                else:
+                    al = Alocacao.objects.create(
+                        turma=turma,
+                        professor=None,
+                        horas_alocadas=carga_turma,
+                        status_conflito=True,
+                    )
+
             alocacoes_criadas.append(al)
 
     return alocacoes_criadas

@@ -2,8 +2,8 @@ from django.contrib import admin
 
 from core.models.alocacao import Alocacao
 from core.models.disciplina import Disciplina
-from core.models.disponibilidade import Disponibilidade
 from core.models.professor import Professor
+from core.models.turma import Turma
 
 
 @admin.register(Professor)
@@ -13,11 +13,18 @@ class ProfessorAdmin(admin.ModelAdmin):
     list_filter = ("areas",)
 
 
-@admin.register(Disponibilidade)
-class DisponibilidadeAdmin(admin.ModelAdmin):
-    list_display = ("professor", "dia_semana", "horario_inicio", "horario_fim")
-    list_filter = ("dia_semana",)
-
-
 admin.site.register(Disciplina)
 admin.site.register(Alocacao)
+
+
+@admin.register(Turma)
+class TurmaAdmin(admin.ModelAdmin):
+    list_display = (
+        "nome",
+        "disciplina",
+        "dia_semana",
+        "horario_inicio",
+        "horario_fim",
+    )
+    list_filter = ("disciplina__area", "dia_semana")
+    search_fields = ("nome", "disciplina__nome")
