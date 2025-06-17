@@ -1,0 +1,6 @@
+coordenacao,codigo_atividade,nome_atividade,codigo_turma,id_turma,local,modelo,num_alunos,tipo_turma,periodo,creditos,dia_semana,horario_inicio,horario_fim,tipo_atividade,carga_docente,chapa,professor_nome,horas_a_alocar,orientacoes
+Coordinador A,CD201,Álgebra Lineal,Grupo1,aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa,Buenos Aires,Presencial,28,Teoría,2025.1,4,lunes,08:30:00,10:30:00,Asignatura,4,2022001,Carlos Pérez,4,
+Coordinador B,CD202,Física Clásica,Grupo2,bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb,Montevideo,Remoto,22,Práctica,2025.1,3,martes,09:00:00,11:00:00,Asignatura,3,2022002,Laura Gómez,2,Revisar slides
+Coordinador C,CD203,Química Analítica,Grupo3,cccccccc-cccc-cccc-cccc-cccccccccccc,Santiago,Híbrido,18,Teoría,2025.1,3,miércoles,15:00:00,17:00:00,Asignatura,3,2022003,Miguel Ramírez,3,Confirmar enlace
+Coordinador D,CD204,Literatura Hispanoamericana,Grupo4,dddddddd-dddd-dddd-dddd-dddddddddddd,Lima,Presencial,38,Seminario,2025.1,2,jueves,10:00:00,12:00:00,Asignatura,2,2022004,María Fernández,2,
+Coordinador E,CD205,Programación en Java,Grupo5,eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee,Río de Janeiro,Remoto,32,Taller,2025.1,3,viernes,14:00:00,17:00:00,Asignatura,3,2022005,José Santos,3,Traer portátil
