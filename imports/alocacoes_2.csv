@@ -1,0 +1,6 @@
+coordenacao,codigo_atividade,nome_atividade,codigo_turma,id_turma,local,modelo,num_alunos,tipo_turma,periodo,creditos,dia_semana,horario_inicio,horario_fim,tipo_atividade,carga_docente,chapa,professor_nome,horas_a_alocar,orientacoes
+Coordination A,CD201,Calcul différentiel,Groupe1,AAAA1111-1111-1111-1111-111111111111,Lyon,Présentiel,28,Théorique,2025.1,4,lundi,08:00:00,10:00:00,Cours,4,2022001,Jean Dupont,4,
+Coordination B,CD202,Physique générale,Groupe2,BBBB2222-2222-2222-2222-222222222222,Marseille,À distance,22,Pratique,2025.1,3,mardi,10:00:00,12:00:00,Cours,3,2022002,Anne Dubois,3,Respectez les horaires
+Coordination C,CD203,Chimie organique,Groupe3,CCCC3333-3333-3333-3333-333333333333,Nice,Hybride,18,Théorique,2025.1,3,mercredi,14:00:00,16:00:00,Cours,3,2022003,Charles Olivier,3,Vérifier la salle
+Coordination D,CD204,Littérature brésilienne,Groupe4,DDDD4444-4444-4444-4444-444444444444,Toulouse,Présentiel,38,Séminaire,2025.1,2,jeudi,09:00:00,11:00:00,Cours,2,2022004,Marie Coste,2,
+Coordination E,CD205,Programmation Python,Groupe5,EEEE5555-5555-5555-5555-555555555555,Bordeaux,À distance,30,Atelier,2025.1,3,vendredi,13:00:00,16:00:00,Cours,3,2022005,Pierre Martin,3,Ordinateur portable requis

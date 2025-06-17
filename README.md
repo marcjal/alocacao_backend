@@ -2,20 +2,20 @@
 
 Este projeto implementa o backend de uma aplicação para alocação automática de professores em disciplinas, com suporte a:
 
-* Importação de planilhas (CSV/XLSX) de professores e disciplinas
-* Algoritmo de alocação por área, horário e carga horária
-* Exportação de alocações em CSV ou XLSX (raw ou Base64)
-* Documentação Swagger via **drf-yasg**
+- Importação de planilhas (CSV/XLSX) de professores e disciplinas
+- Algoritmo de alocação por área, horário e carga horária
+- Exportação de alocações em CSV ou XLSX (raw ou Base64)
+- Documentação Swagger via **drf-yasg**
 
 ---
 
 ## Tecnologias
 
-* Python 3.11 + Django 5.2
-* Django REST Framework
-* drf-yasg (Swagger/OpenAPI)
-* Pandas (para leitura/exportação de planilhas)
-* PostgreSQL (ou outro RDBMS suportado pelo Django)
+- Python 3.11 + Django 5.2
+- Django REST Framework
+- drf-yasg (Swagger/OpenAPI)
+- Pandas (para leitura/exportação de planilhas)
+- PostgreSQL (ou outro RDBMS suportado pelo Django)
 
 ---
 
@@ -86,9 +86,9 @@ alocacao_backend/         # Projeto Django
 
 ## Documentação da API
 
-* **Swagger UI**:  `http://127.0.0.1:8000/swagger/`
-* **Redoc**:       `http://127.0.0.1:8000/redoc/`
-* **JSON/YAML**:   `http://127.0.0.1:8000/swagger.json` ou `.yaml`
+- **Swagger UI**: `http://127.0.0.1:8000/swagger/`
+- **Redoc**: `http://127.0.0.1:8000/redoc/`
+- **JSON/YAML**: `http://127.0.0.1:8000/swagger.json` ou `.yaml`
 
 ---
 
@@ -98,11 +98,17 @@ Prefixo: `/api/v1/`
 
 ---
 
-## Contribuição
+# Documentação Completa da API
 
-* Abra issues ou PRs para melhorias
-* Siga o style guide e escreva testes para novos recursos
+Consulte também [docs/api.md](docs/api.md) para o spec completo.
 
 ---
 
-*Qualquer dúvida, comente!*
+## Contribuição
+
+- Abra issues ou PRs para melhorias
+- Siga o style guide e escreva testes para novos recursos
+
+---
+
+_Qualquer dúvida, comente!_

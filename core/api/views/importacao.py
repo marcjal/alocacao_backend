@@ -3,7 +3,10 @@ from io import BytesIO, StringIO
 
 import pandas as pd
 from django.core.files.uploadedfile import SimpleUploadedFile
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, viewsets
+from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
 from core.api.serializers.importacao import ImportacaoSerializer
@@ -14,6 +17,27 @@ class ImportacaoViewSet(viewsets.ModelViewSet):
     queryset = Importacao.objects.all()
     serializer_class = ImportacaoSerializer
 
+    parser_classes = [MultiPartParser]
+
+    @swagger_auto_schema(
+        operation_summary="Importar",
+        consumes=["multipart/form-data"],
+        manual_parameters=[
+            openapi.Parameter(
+                name="file",
+                in_=openapi.IN_FORM,
+                type=openapi.TYPE_FILE,
+                description="Arquivo a importar",
+                required=True,
+            ),
+        ],
+        responses={
+            201: openapi.Response(
+                description="Importação realizada com sucesso"
+            ),
+            400: openapi.Response(description="Erro de validação"),
+        },
+    )
     def create(self, request, *args, **kwargs):
         data = request.data.copy()
 
@@ -79,3 +103,15 @@ class ImportacaoViewSet(viewsets.ModelViewSet):
         return Response(
             self.get_serializer(imp).data, status=status.HTTP_201_CREATED
         )
+
+    @swagger_auto_schema(auto_schema=None)
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
+
+    @swagger_auto_schema(auto_schema=None)
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
+    @swagger_auto_schema(auto_schema=None)
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)

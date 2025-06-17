@@ -1,0 +1,6 @@
+coordenacao,codigo_atividade,nome_atividade,codigo_turma,id_turma,local,modelo,num_alunos,tipo_turma,periodo,creditos,dia_semana,horario_inicio,horario_fim,tipo_atividade,carga_docente,chapa,professor_nome,horas_a_alocar,orientacoes
+Coord F,CD106,Statistica Avanzata,Classe6,66666666-6666-6666-6666-666666666666,Bologna,In presenza,28,Teoria,2025.1,5,lunedì,09:00:00,12:00:00,Disciplina,3,2021006,Luisa Ferrari,3,Portare calcolatrice
+Coord G,CD107,Storia Contemporanea,Classe7,77777777-7777-7777-7777-777777777777,Verona,Remoto,32,Seminario,2025.1,2,martedì,14:00:00,16:00:00,Disciplina,2,2021007,Marco Bianchi,2,
+Coord H,CD108,Informatica,Classe8,88888888-8888-8888-8888-888888888888,Milano,Ibrido,25,Pratica,2025.1,4,mercoledì,10:00:00,12:00:00,Disciplina,4,2021008,Sofia Romano,4,Controllare connessione
+Coord I,CD109,Matematica Discreta,Classe9,99999999-9999-9999-9999-999999999999,Padova,In presenza,20,Laboratorio,2025.1,3,giovedì,08:00:00,11:00:00,Disciplina,3,2021009,Alessio Greco,3,Portare laptop
+Coord L,CD110,Filosofia Moderna,Classe10,aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa,Venezia,Remoto,30,Teoria,2025.1,4,venerdì,13:00:00,15:00:00,Disciplina,4,2021010,Elena Costa,4,Partecipazione attiva
